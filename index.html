@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>On-Premise Integration — Till POS Integration API v1.3.29</title>
+<title>On-Premise Integration — Till POS Integration API v1.3.30</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 <style>
@@ -503,7 +503,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
         <span class="sh-subtitle">Nuvei</span>
       </div>
     </div>
-    <span class="sh-firmware">QA_1.3.29</span>
+    <span class="sh-firmware">QA_1.3.30</span>
   </div>
 
   <div class="nav-group">
@@ -601,9 +601,9 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
           <li>Host Modes: Direct API Device – App 2 App Inter-Link</li>
         </ul>
         <div class="hero-meta">
-          <span class="hero-badge">API v1.3.29</span>
-          <span class="hero-badge">QA_1.3.29</span>
-          <span class="hero-badge hero-badge-muted">2026-09-08</span>
+          <span class="hero-badge">API v1.3.30</span>
+          <span class="hero-badge">QA_1.3.30</span>
+          <span class="hero-badge hero-badge-muted">2026-09-29</span>
         </div>
         <p class="hero-desc">REST API specification for integrating a third-party POS system with a payment terminal over a local network. Covers all transaction types, receipt options, async mode, and signature approval flow.</p>
       </div>
@@ -3004,6 +3004,7 @@ Content-Length: 1
           <tr><td class="field-name">ResponseType</td><td class="field-type">string</td><td><span class="badge badge-m">M</span></td><td>Always <code>"querytransaction"</code>.</td></tr>
           <tr><td class="field-name">Status</td><td class="field-type">int</td><td><span class="badge badge-m">M</span></td><td>Transaction status code. Possible values are listed in <a class="doc-table-ref" href="#ref-enum-12">Table ENUM-12</a>.</td></tr>
           <tr><td class="field-name">StatusText</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>Text of status of transaction when supplied. See <a class="doc-table-ref" href="#ref-enum-12">Table ENUM-12</a>.</td></tr>
+          <tr><td class="field-name">TerminalID</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>Identifier of the payment terminal that is processing the transaction. Returned at the top level of <code>Response</code> when available.</td></tr>
           <tr><td class="field-name">IsCancelable</td><td class="field-type">bool</td><td><span class="badge badge-o">O</span></td><td>Whether the current async flow can be canceled at this stage. Serialized as <code>"1"</code>/<code>"0"</code> or <code>true</code>/<code>false</code> according to TMS Boolean Type.</td></tr>
           <tr><td class="field-name">PrinterStatus</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>Printer state text returned by the terminal when available (for example out-of-paper / ready).</td></tr>
           <tr><td class="field-name">Transaction</td><td class="field-type">object</td><td><span class="badge badge-o">O</span></td><td>Returned as an object when the status equals <code>1</code> (<code>TransactionCompleted</code>); read the gateway RRN from <code>Transaction.szReferenceNumber</code>. It can be <code>null</code> while the transaction is pending — see <a class="doc-table-ref" href="#ref-enum-12">Table ENUM-12</a>.</td></tr>
@@ -3028,6 +3029,7 @@ Content-Length: 1
     "Status": 1,
     "StatusText": "Transaction completed",
     "IsCancelable": "0",
+    "TerminalID": "PX600821",
     "PrinterStatus": "Printer Ready",
     "Transaction": {
       "ReceiptType": 0,
@@ -3092,11 +3094,10 @@ Content-Length: 1
   "SessionId": "{{sessionId}}",
   "ResponseType": "querytransaction",
   "Response": {
-    "Status": 2,
-    "StatusText": "Initializing transaction",
-    "IsCancelable": true,
-    "PrinterStatus": "",
-    "Transaction": null
+    "Status": 12,
+    "StatusText": "Getting signature from customer",
+    "IsCancelable": false,
+    "TerminalID": "PX600821"
   }
 }</code></pre></div>
       </div>
@@ -3455,6 +3456,11 @@ Content-Length: 1
       <div class="timeline">
         <div class="timeline-item">
           <div class="timeline-dot latest"></div>
+          <div class="timeline-header"><span class="timeline-version">QA_1.3.30</span><span class="timeline-date">2026/09/29</span><span class="timeline-author">by Huy Nguyen</span></div>
+          <div class="timeline-notes"><span class="cl-badge changed"><span class="cl-badge-type">CHANGED</span>Add optional <code>TerminalID</code> to <code>querytransaction</code> responses, including completed and pending signature-status responses.</span></div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
           <div class="timeline-header"><span class="timeline-version">QA_1.3.29</span><span class="timeline-date">2026/09/08</span><span class="timeline-author">by Lien Le</span></div>
           <div class="timeline-notes"><span class="cl-badge changed"><span class="cl-badge-type">CHANGED</span>Update the specification to QA_1.3.29 and align transaction RRN, response, search, and reprint guidance.</span></div>
         </div>
