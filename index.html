@@ -532,15 +532,15 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
     <div class="nav-item sub" data-target="cashout"><span class="method-badge">C</span>Cash Only</div>
     <div class="nav-item sub" data-target="purchasecash"><span class="method-badge">PC</span>Purchase Cash</div>
     <div class="nav-item sub" data-target="motopurchase"><span class="method-badge">MP</span>MOTO Purchase</div>
-    <div class="nav-item sub" data-target="motorefund"><span class="method-badge">MR</span>MOTO Refund Amount</div>
+    <div class="nav-item sub" data-target="motorefund"><span class="method-badge">MR</span>MOTO Refund</div>
     <div class="nav-item sub" data-target="preauth-family"><span class="method-badge">—</span>Pre-auth Guide</div>
     <div class="nav-item sub" data-target="preauth"><span class="method-badge">PA</span>Pre-auth</div>
     <div class="nav-item sub" data-target="preauthcomplete"><span class="method-badge">AC</span>Pre-auth Complete</div>
     <div class="nav-item sub" data-target="preauthcancel"><span class="method-badge">PAC</span>Pre-auth Cancel</div>
     <div class="nav-item sub" data-target="preauthtopup"><span class="method-badge">PT</span>Pre-auth Increment</div>
     <div class="nav-item sub" data-target="preauthdelayed"><span class="method-badge">PD</span>Pre-auth Delayed</div>
-    <div class="nav-item sub" data-target="preauthextended"><span class="method-badge">PE</span>Extended Pre-Auth</div>
-    <div class="nav-item sub" data-target="preauthreversal"><span class="method-badge">PR</span>Pre-Auth Reversal</div>
+    <div class="nav-item sub" data-target="preauthextended"><span class="method-badge">PE</span>Extended Pre-auth</div>
+    <div class="nav-item sub" data-target="preauthreversal"><span class="method-badge">PR</span>Pre-auth Reversal</div>
     <div class="nav-item" data-target="searchtransaction"><span class="method-badge">POST</span>Search Transaction</div>
   </div>
 
@@ -615,8 +615,8 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
     <div class="middle-col">
       <h2 class="section-title">Introduction</h2>
       <div class="section-desc">
-        <p>Payment gateway integration with a POS system enables customers to make purchases quickly and securely from their POS device to the Payment terminal. We integrated a payment gateway with a POS system according to PCI DSS and PA DSS standards.</p>
-        <p>The POS Adaptor API is consumed by a POS or middleware system talking to a payment terminal on a local network. The public contract and examples use <strong>JSON</strong>. The runtime also accepts legacy XML content types for backward compatibility; XML is outside this public contract.</p>
+        <p>Payment gateway integration with a POS system enables customers to make purchases quickly and securely from their POS device to the payment terminal. Integrators are responsible for meeting applicable PCI DSS and PCI Software Security Framework requirements.</p>
+        <p>The POS Integration API is consumed by a POS or middleware system talking to a payment terminal on a local network. The public contract and examples use <strong>JSON</strong>. The runtime also accepts legacy XML content types for backward compatibility; XML is outside this public contract.</p>
       </div>
 
       <div class="table-label">Technical Requirements</div>
@@ -627,9 +627,6 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
           <li><strong>X-API-KEY</strong> — required when the TMS-configured authorization key is set. Missing or wrong key returns an error response. The client may generate the key in any form (maximum <strong>32</strong> characters); the value configured in TMS and the value sent in <code>X-API-KEY</code> must be identical. Sample TMS key: <code>6B9F2A81D3E47C5A0B1F9E8D7C6B5A43</code>.</li>
         </ul>
       </div>
-
-      <div class="table-label">Test Tool</div>
-      <div class="section-desc"><p>Bruno collection under <code>projects/till/bruno/pos-integration-nuvei/</code>. Send requests, inspect responses, and reproduce the QA cases.</p></div>
 
       <div class="table-label">Quick Start</div>
       <ol class="quick-start-list">
@@ -773,7 +770,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
             <col style="width:28%">
             <col style="width:42%">
           </colgroup>
-          <thead><tr><th>Value of "Status" field</th><th>Value of "StatusText" field</th><th>Describe</th></tr></thead>
+          <thead><tr><th>Value of "Status" field</th><th>Value of "StatusText" field</th><th>Description</th></tr></thead>
           <tbody>
                         <tr><td class="field-name">None = 0</td><td></td><td>No active transaction stage.</td></tr>
             <tr><td class="field-name">TransactionCompleted = 1</td><td>Transaction completed</td><td>The transaction has been completely processed. The <code>Transaction</code> object in the response contains the full result when status equals <code>1</code>.</td></tr>
@@ -782,9 +779,9 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
             <tr><td class="field-name">WaitingForCard = 4</td><td>Waiting for card</td><td>Waiting for the card to be presented.</td></tr>
             <tr><td class="field-name">CardProcessing = 5</td><td>Card processing</td><td>The card is currently being processed.</td></tr>
             <tr><td class="field-name">TransactionProcessing = 6</td><td>Transaction Processing</td><td>The transaction is being processed.</td></tr>
-            <tr><td class="field-name">TransactionProcessed = 7</td><td>Transaction Processed</td><td>The Transaction has been processed.</td></tr>
-            <tr><td class="field-name">WaitingForCardRemove = 8</td><td>Waiting For Card Remove</td><td>The transaction requires selecting an waiting for card remove.</td></tr>
-            <tr><td class="field-name">WaitingForMerchantCard = 9</td><td>Waiting For Merchant Card</td><td>The transaction requires the user to swipe merchant card.</td></tr>
+            <tr><td class="field-name">TransactionProcessed = 7</td><td>Transaction Processed</td><td>The transaction has been processed.</td></tr>
+            <tr><td class="field-name">WaitingForCardRemove = 8</td><td>Waiting For Card Remove</td><td>Waiting for the card to be removed.</td></tr>
+            <tr><td class="field-name">WaitingForMerchantCard = 9</td><td>Waiting For Merchant Card</td><td>The transaction requires the user to swipe the merchant card.</td></tr>
             <tr><td class="field-name">WaitingForSignatureConfirmation = 10</td><td>Waiting For Signature Confirmation</td><td>The payment app is auto-approving the signature without POS app interaction.</td></tr>
             <tr><td class="field-name">WaitingForSignatureConfirmationFromClient = 11</td><td>Waiting For Signature Confirmation From Client</td><td>Waiting for the POS app to approve or reject the captured signature. Call <strong>Approve Signature</strong> (<code>POST /approvesignature</code>) with the required <code>Approval</code> value, then continue polling.</td></tr>
             <tr><td class="field-name">GettingSignatureFromCustomer = 12</td><td>Getting Signature From Customer</td><td>The system is prompting the customer to provide a signature.</td></tr>
@@ -835,7 +832,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
 
       <div class="table-label">Request Authorization</div>
       <div class="section-desc">
-        <p>This feature is not a default-enabled one, so resellers need to set the key from TMS to restrict clients' requests. After configuring this authorization value, clients need to add it as a header item to authorize requests (<code>X-API-KEY</code>). The Authorization Key set in TMS allows a maximum of <strong>32</strong> characters.</p>
+        <p>This feature is disabled by default, so resellers need to set the key in TMS to restrict client requests. After configuring this authorization value, clients need to add it as a header item to authorize requests (<code>X-API-KEY</code>). The Authorization Key set in TMS allows a maximum of <strong>32</strong> characters.</p>
         <p>There is no required generation algorithm. The client may create the key in any format they choose (letters, digits, hex string, etc.), as long as the same value is configured on TMS and sent in the <code>X-API-KEY</code> request header.</p>
         <p>Sample Authorization Key used as a TMS template default:</p>
         <div class="code-block-wrap code-single" style="margin-top:8px;margin-bottom:12px;">
@@ -873,7 +870,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
             <tr><td>Cash Only</td><td>POST</td><td>transaction</td></tr>
             <tr><td>Refund Amount</td><td>POST</td><td>transaction</td></tr>
             <tr><td>MOTO Purchase</td><td>POST</td><td>transaction</td></tr>
-            <tr><td>MOTO Refund Amount</td><td>POST</td><td>transaction</td></tr>
+            <tr><td>MOTO Refund</td><td>POST</td><td>transaction</td></tr>
             <tr><td>Pre-auth</td><td>POST</td><td>transaction</td></tr>
             <tr><td>Pre-auth Complete</td><td>POST</td><td>transaction</td></tr>
             <tr><td>Pre-auth Cancel (unattended only)</td><td>POST</td><td>transaction</td></tr>
@@ -892,17 +889,17 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
             <tr><td>Manual Host Logon</td><td>POST</td><td>logon</td></tr>
 
 
-            <tr><td>Pre-Auth Inquiry</td><td>POST</td><td>transactionsearch</td></tr>
-            <tr><td>Pre-Auth Completion Inquiry</td><td>POST</td><td>transactionsearch</td></tr>
+            <tr><td>Pre-auth Inquiry</td><td>POST</td><td>transactionsearch</td></tr>
+            <tr><td>Pre-auth Completion Inquiry</td><td>POST</td><td>transactionsearch</td></tr>
             <tr><td>Search Transaction</td><td>POST</td><td>transactionsearch</td></tr>
             <tr><td>Cancel Transaction</td><td>GET / POST</td><td>canceltransaction</td></tr>
             <tr><td>Health Check</td><td>GET</td><td>healthcheck</td></tr>
-            <tr><td>Bring App To Foreground</td><td>POST</td><td>bringapptoforeground</td></tr>
+            <tr><td>Bring App to Foreground</td><td>POST</td><td>bringapptoforeground</td></tr>
             <tr><td>Query Transaction</td><td>GET</td><td>querytransaction</td></tr>
             <tr><td>Query Stored Transaction</td><td>POST</td><td>querystoredtransaction</td></tr>
             <tr><td>Approve Signature</td><td>POST</td><td>approvesignature</td></tr>
-            <tr><td>Extended Pre-Auth</td><td>POST</td><td>transaction</td></tr>
-            <tr><td>Pre-Auth Reversal</td><td>POST</td><td>transaction</td></tr>
+            <tr><td>Extended Pre-auth</td><td>POST</td><td>transaction</td></tr>
+            <tr><td>Pre-auth Reversal</td><td>POST</td><td>transaction</td></tr>
             <tr><td>Shift Totals</td><td>POST</td><td>shiftTotals</td></tr>
             <tr><td>Voucher Entry</td><td>POST</td><td>voucherEntry</td></tr>
           </tbody>
@@ -1075,7 +1072,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
           <li><strong>String mode</strong> — <code>"1"</code> / <code>"0"</code> (yes/no, enabled/disabled, approved/declined)</li>
           <li><strong>JSON boolean mode</strong> — <code>true</code> / <code>false</code></li>
         </ul>
-        <p style="margin-top:8px;">Integrators must use the encoding that matches the terminal's TMS setting. Do not mix formats in a single request. Applies to <code>Success</code>, <code>AsyncMode</code>, <code>WithReceiptImageData</code>, and <code>DisablePrinting</code> (transaction, card status, settlement, offline transmission), transaction flag fields (<code>fAuthorized</code>, <code>fOffline</code>, etc.), and other boolean switches documented on each endpoint.</p>
+        <p style="margin-top:8px;">Integrators must use the encoding that matches the terminal's TMS setting. Do not mix formats in a single request. Applies to <code>Success</code>, <code>AsyncMode</code>, <code>WithReceiptImageData</code>, and <code>DisablePrinting</code> (transaction, Card Verification, settlement), transaction flag fields (<code>fAuthorized</code>, <code>fOffline</code>, etc.), and other boolean switches documented on each endpoint.</p>
       </div>
       <div class="doc-figure-wrap">
         <figure class="doc-figure">
@@ -1229,7 +1226,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
       <div class="url-block"><div class="url-block-label">Endpoint</div><div class="endpoint-url"><span class="http-method">POST</span> https://<span class="url-var">{{pos-server}}</span>:<span class="url-var">{{pos-port}}</span>/v1/sessions/<span class="url-var">{{sessionId}}</span>/getAllowedTransactions</div></div>
       <div class="code-block-wrap"><div class="code-block-label">Request Example</div>
         <pre><code class="language-json">{
-  "Merchant": "1"
+  "Merchant": "01"
 }</code></pre></div>
       <div class="code-block-wrap code-single"><div class="code-block-label">Response Example</div>
         <pre><code class="language-json">{
@@ -1273,11 +1270,11 @@ Content-Length: 1
   <!--  BRING APP TO FOREGROUND  -->
   <div class="section-container" id="bringapptoforeground">
     <div class="middle-col">
-      <h2 class="section-title">Bring App To Foreground</h2>
-      <div class="section-desc"><p>This function allows moving the POS app to the foreground if the application is in the background.</p>
+      <h2 class="section-title">Bring App to Foreground</h2>
+      <div class="section-desc"><p>This function moves the payment app to the foreground if it is running in the background.</p>
         <p>The request to bring the application to the foreground uses the POST method and does not require a request body to perform this function.</p></div>
       <div class="table-label">Response Fields</div>
-      <p class="section-desc">Below is a list of fields that will appear in the 'Bring Application to Foreground' response. Fields labeled with 'M' (Mandatory) are those that will appear when the request is either successful or failed.</p>
+      <p class="section-desc">Below is a list of fields that will appear in the 'Bring Application to Foreground' response. Fields labeled with 'M' (Mandatory) appear whether the request succeeds or fails.</p>
       <table class="field-table">
         <thead><tr><th>Field Name</th><th>Type (Max Length)</th><th>M/O</th><th>Description</th></tr></thead>
         <tbody>
@@ -1334,22 +1331,22 @@ Content-Length: 1
         <tbody>
           <tr><td class="field-name">Merchant</td><td class="field-type">string(2)</td><td><span class="badge badge-o">O</span></td><td>Specify the merchant to execute the transaction. See <a class="doc-table-ref" href="#ref-req-01">Table REQ-01</a>.</td></tr>
           <tr><td class="field-name">TxnType</td><td class="field-type">string(3)</td><td><span class="badge badge-m">M</span></td><td>Type of transaction — value depends on operation (see subsections).</td></tr>
-          <tr><td class="field-name">Amount</td><td class="field-type">long</td><td><span class="badge badge-o">O</span></td><td>Transaction amount in cents. Required and greater than 0 for amount-based transaction types; optional for Extended Pre-Auth (<code>PE</code>).</td></tr>
+          <tr><td class="field-name">Amount</td><td class="field-type">long</td><td><span class="badge badge-o">O</span></td><td>Transaction amount in cents. Required and greater than 0 for amount-based transaction types; optional for Extended Pre-auth (<code>PE</code>).</td></tr>
           <tr><td class="field-name">TxnRef</td><td class="field-type">string(64)</td><td><span class="badge badge-o">O</span></td><td>Reference number attached to the transaction. Appears on the receipt.</td></tr>
           <tr><td class="field-name">OrderID</td><td class="field-type">string(51)</td><td><span class="badge badge-o">O</span></td><td>Client-supplied order identifier for later lookup via Query Stored Transaction. The current native buffer reserves 52 bytes including the terminator, so 51 data characters are the safe maximum. The terminal echoes it in <code>Response.Transaction.OrderID</code> when present and does not generate one when omitted.</td></tr>
           <tr><td class="field-name">EnableTip</td><td class="field-type">bool</td><td><span class="badge badge-o">O</span></td><td>Whether tip entry is offered. Default disabled.</td></tr>
-          <tr><td class="field-name">AmtTip</td><td class="field-type">long</td><td><span class="badge badge-o">O</span></td><td>AmtTip of the sale in cents.</td></tr>
+          <tr><td class="field-name">AmtTip</td><td class="field-type">long</td><td><span class="badge badge-o">O</span></td><td>Tip amount of the sale in cents.</td></tr>
           <tr><td class="field-name">AsyncMode</td><td class="field-type">bool</td><td><span class="badge badge-o">O</span></td><td>Default disabled. Set enabled for async mode — see <a class="doc-table-ref" href="#overview-syncasync">Sync vs Async</a>.</td></tr>
           <tr><td class="field-name">WithReceiptImageData</td><td class="field-type">bool</td><td><span class="badge badge-o">O</span></td><td>Requests supplementary receipt image/signature data. <code>ReceiptData</code> is controlled by <code>ReceiptType</code>; receipt fields are optional and returned only when generated.</td></tr>
           <tr><td class="field-name">DisablePrinting</td><td class="field-type">bool</td><td><span class="badge badge-o">O</span></td><td>If enabled, disable receipt printing for this transaction.</td></tr>
           <tr><td class="field-name">ReceiptType</td><td class="field-type">int</td><td><span class="badge badge-o">O</span></td><td>Defines the receipt format. See <a class="doc-table-ref" href="#ref-req-02">Table REQ-02</a>.</td></tr>
-          <tr><td class="field-name">PlainTextCharPerLine</td><td class="field-type">short</td><td><span class="badge badge-o">O</span></td><td>Plain-text receipt width when <code>ReceiptType</code> is plain text.</td></tr>
+          <tr><td class="field-name">PlainTextCharPerLine</td><td class="field-type">int</td><td><span class="badge badge-o">O</span></td><td>Plain-text receipt width when <code>ReceiptType</code> is plain text.</td></tr>
           <tr><td class="field-name">CustomerReceiptPrintOption</td><td class="field-type">int</td><td><span class="badge badge-o">O</span></td><td>Defines the customer receipt printing option. See <a class="doc-table-ref" href="#ref-req-03">Table REQ-03</a>.</td></tr>
           <tr><td class="field-name">MerchantReceiptPrintOption</td><td class="field-type">int</td><td><span class="badge badge-o">O</span></td><td>Defines the merchant receipt printing option. See <a class="doc-table-ref" href="#ref-req-03">Table REQ-03</a>.</td></tr>
         </tbody>
       </table>
       <div class="info-card" style="margin-top:16px;" id="enabletip-notes">
-        <h4>EnableTip behaviour</h4>
+        <h4>EnableTip behavior</h4>
         <ul>
           <li>If <code>AmtTip</code> &gt; 0, the request is sent with the Tip value regardless of <code>EnableTip</code>.</li>
           <li>If <code>AmtTip</code> is 0 and <code>EnableTip</code> is true and the payment app allows tip, a popup prompts the user to enter a Tip value.</li>
@@ -1364,7 +1361,7 @@ Content-Length: 1
           <thead><tr><th>Merchant Field Value</th><th>Single Merchant</th><th>Multi Merchant</th></tr></thead>
           <tbody>
             <tr><td>Not set or invalid (null, "0", "abc", etc.)</td><td>Automatically select the default merchant</td><td>Return error – Merchant Id not found</td></tr>
-            <tr><td>Valid value (parsable to int)</td><td>Use the provided select merchant</td><td>Use the provided select merchant</td></tr>
+            <tr><td>Valid value (parsable to int)</td><td>Use the selected merchant</td><td>Use the selected merchant</td></tr>
           </tbody>
         </table>
       </div>
@@ -1383,7 +1380,7 @@ Content-Length: 1
       </div>
       <div id="ref-req-03" class="ref-table-anchor" style="margin-top:20px;">
         <div class="table-label">Table REQ-03 — Print Option (<code>CustomerReceiptPrintOption</code> / <code>MerchantReceiptPrintOption</code>)</div>
-        <p class="ref-table-caption">Defines the receipt printing behaviour for customer and merchant during a transaction.</p>
+        <p class="ref-table-caption">Defines the receipt printing behavior for customer and merchant during a transaction.</p>
         <table class="field-table">
           <thead><tr><th>Print Option</th><th>Description</th></tr></thead>
           <tbody>
@@ -1408,15 +1405,15 @@ Content-Length: 1
           <tr><td class="field-name">Merchant</td><td class="field-type">string(2)</td><td><span class="badge badge-o">O</span></td><td>Merchant that executed the transaction.</td></tr>
           <tr><td class="field-name">TxnType</td><td class="field-type">string(9)</td><td><span class="badge badge-m">M</span></td><td>Type of transaction (matches request <code>TxnType</code>).</td></tr>
           <tr><td class="field-name">OrderID</td><td class="field-type">string(51)</td><td><span class="badge badge-o">O</span></td><td>Order identifier echoed from the original request. The current native buffer reserves 52 bytes including the terminator, so 51 data characters are the safe maximum. Present only when the original request supplied <code>OrderID</code>.</td></tr>
-          <tr><td class="field-name">IdShift</td><td class="field-type">uint</td><td><span class="badge badge-m">M</span></td><td>Shift's identifier.</td></tr>
-          <tr><td class="field-name">IdShiftName</td><td class="field-type">uint</td><td><span class="badge badge-m">M</span></td><td>Shift Name's identifier.</td></tr>
+          <tr><td class="field-name">IdShift</td><td class="field-type">uint</td><td><span class="badge badge-m">M</span></td><td>Shift identifier.</td></tr>
+          <tr><td class="field-name">IdShiftName</td><td class="field-type">uint</td><td><span class="badge badge-m">M</span></td><td>Shift name identifier.</td></tr>
           <tr><td class="field-name">lAmount</td><td class="field-type">long</td><td><span class="badge badge-m">M</span></td><td>The approved amount.</td></tr>
           <tr><td class="field-name">lTipAmount</td><td class="field-type">long</td><td><span class="badge badge-m">M</span></td><td>The approved tip amount.</td></tr>
-          <tr><td class="field-name">lCashOut</td><td class="field-type">uint</td><td><span class="badge badge-m">M</span></td><td>The approved cash amount.</td></tr>
-          <tr><td class="field-name">lCashOutFee</td><td class="field-type">long</td><td><span class="badge badge-m">M</span></td><td>The cash out transaction fees.</td></tr>
-          <tr><td class="field-name">lSurChargeTax</td><td class="field-type">long</td><td><span class="badge badge-m">M</span></td><td>The Tax surcharge.</td></tr>
+          <tr><td class="field-name">lCashOut</td><td class="field-type">long</td><td><span class="badge badge-m">M</span></td><td>The approved cash amount.</td></tr>
+          <tr><td class="field-name">lCashOutFee</td><td class="field-type">long</td><td><span class="badge badge-m">M</span></td><td>The cash-out transaction fee.</td></tr>
+          <tr><td class="field-name">lSurChargeTax</td><td class="field-type">long</td><td><span class="badge badge-m">M</span></td><td>The tax surcharge.</td></tr>
           <tr><td class="field-name">lDiscount</td><td class="field-type">long</td><td><span class="badge badge-m">M</span></td><td>Discount amount of the transaction.</td></tr>
-          <tr><td class="field-name">lDiscountPercent</td><td class="field-type">long</td><td><span class="badge badge-m">M</span></td><td>Discount Percentage of the transaction.</td></tr>
+          <tr><td class="field-name">lDiscountPercent</td><td class="field-type">long</td><td><span class="badge badge-m">M</span></td><td>Discount percentage of the transaction.</td></tr>
           <tr><td class="field-name">iReward</td><td class="field-type">uint</td><td><span class="badge badge-m">M</span></td><td>The transaction reward.</td></tr>
           <tr><td class="field-name">lAuthorizedTotal</td><td class="field-type">long</td><td><span class="badge badge-m">M</span></td><td>The total approved amount: <code>lAmount + lTipAmount + lCashOut + fees/surcharges - discounts</code>, where applicable.</td></tr>
           <tr><td class="field-name">lDonationAmount</td><td class="field-type">long</td><td><span class="badge badge-m">M</span></td><td>The total approved donation amount.</td></tr>
@@ -1424,36 +1421,36 @@ Content-Length: 1
           <tr><td class="field-name">iCardType</td><td class="field-type">uint</td><td><span class="badge badge-m">M</span></td><td>Type of card. See <a class="doc-table-ref" href="#ref-enum-03">Table ENUM-03</a>.</td></tr>
           <tr><td class="field-name">iCurrencyCode</td><td class="field-type">uint</td><td><span class="badge badge-m">M</span></td><td>The currency code.</td></tr>
           <tr><td class="field-name">fsModify</td><td class="field-type">uint</td><td><span class="badge badge-m">M</span></td><td>The current status of the payment record. See <a class="doc-table-ref" href="#ref-enum-01">Table ENUM-01</a>.</td></tr>
-          <tr><td class="field-name">iPaymentType</td><td class="field-type">uint</td><td><span class="badge badge-m">M</span></td><td>The Payment Type. See <a class="doc-table-ref" href="#ref-enum-05">Table ENUM-05</a>.</td></tr>
-          <tr><td class="field-name">iCustomerLanguage</td><td class="field-type">uint</td><td><span class="badge badge-m">M</span></td><td>The Customer Language. See <a class="doc-table-ref" href="#ref-enum-06">Table ENUM-06</a>.</td></tr>
-          <tr><td class="field-name">fClosed</td><td class="field-type">short</td><td><span class="badge badge-m">M</span></td><td>If the transaction has been completed.</td></tr>
-          <tr><td class="field-name">fBatchError</td><td class="field-type">short</td><td><span class="badge badge-m">M</span></td><td>If the batch is error.</td></tr>
-          <tr><td class="field-name">fVoided</td><td class="field-type">short</td><td><span class="badge badge-m">M</span></td><td>If the transaction has been voided (Voided).</td></tr>
-          <tr><td class="field-name">fRefunded</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>If the transaction has been refunded (Refunded).</td></tr>
-          <tr><td class="field-name">fAuthorized</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>If payment record was processed to host.</td></tr>
-          <tr><td class="field-name">fSignature</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>If it is a signature transaction.</td></tr>
-          <tr><td class="field-name">fCardHolderStatesCVVnotOnCard</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>No CVV due to "No CVV On Card".</td></tr>
-          <tr><td class="field-name">fCardNotPresent</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>No CVV due to "CVV Not Present".</td></tr>
-          <tr><td class="field-name">fCardNotPresentMail</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>If the transaction can not present mail.</td></tr>
-          <tr><td class="field-name">fCardNotPresentPhone</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>If the transaction can not present phone.</td></tr>
-          <tr><td class="field-name">fCanAdjust</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>If the transaction can adjust.</td></tr>
-          <tr><td class="field-name">fCanVoid</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>If the transaction can be voided (Can be voided).</td></tr>
-          <tr><td class="field-name">fCanPreAuthTopUp</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>If the transaction can perform a pre-auth increment.</td></tr>
-          <tr><td class="field-name">fCanPreAuthComplete</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>If the transaction can preauth complete.</td></tr>
-          <tr><td class="field-name">fCanVoidPreAuthComplete</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>If the transaction can void preauth complete.</td></tr>
-          <tr><td class="field-name">fCanGoOffline</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>If the transaction allows for offline stored and forward.</td></tr>
+          <tr><td class="field-name">iPaymentType</td><td class="field-type">uint</td><td><span class="badge badge-m">M</span></td><td>The payment type. See <a class="doc-table-ref" href="#ref-enum-05">Table ENUM-05</a>.</td></tr>
+          <tr><td class="field-name">iCustomerLanguage</td><td class="field-type">uint</td><td><span class="badge badge-m">M</span></td><td>The customer language. See <a class="doc-table-ref" href="#ref-enum-06">Table ENUM-06</a>.</td></tr>
+          <tr><td class="field-name">fClosed</td><td class="field-type">short</td><td><span class="badge badge-m">M</span></td><td>Whether the transaction has been completed.</td></tr>
+          <tr><td class="field-name">fBatchError</td><td class="field-type">short</td><td><span class="badge badge-m">M</span></td><td>Whether the batch is in an error state.</td></tr>
+          <tr><td class="field-name">fVoided</td><td class="field-type">short</td><td><span class="badge badge-m">M</span></td><td>Whether the transaction has been voided.</td></tr>
+          <tr><td class="field-name">fRefunded</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>Whether the transaction has been refunded.</td></tr>
+          <tr><td class="field-name">fAuthorized</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>Whether the payment record has been processed by the host.</td></tr>
+          <tr><td class="field-name">fSignature</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>Whether the transaction is a signature transaction.</td></tr>
+          <tr><td class="field-name">fCardHolderStatesCVVnotOnCard</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>Whether the CVV is absent because the cardholder states there is no CVV on the card ("No CVV On Card").</td></tr>
+          <tr><td class="field-name">fCardNotPresent</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>Whether the CVV is absent because it is not present ("CVV Not Present").</td></tr>
+          <tr><td class="field-name">fCardNotPresentMail</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>Whether the transaction is a card-not-present mail order.</td></tr>
+          <tr><td class="field-name">fCardNotPresentPhone</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>Whether the transaction is a card-not-present telephone order.</td></tr>
+          <tr><td class="field-name">fCanAdjust</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>Whether the transaction can be adjusted.</td></tr>
+          <tr><td class="field-name">fCanVoid</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>Whether the transaction can be voided.</td></tr>
+          <tr><td class="field-name">fCanPreAuthTopUp</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>Whether a pre-auth increment can be performed on the transaction.</td></tr>
+          <tr><td class="field-name">fCanPreAuthComplete</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>Whether the pre-auth can be completed.</td></tr>
+          <tr><td class="field-name">fCanVoidPreAuthComplete</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>Whether the pre-auth completion can be voided.</td></tr>
+          <tr><td class="field-name">fCanGoOffline</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>Whether the transaction can be processed offline using store-and-forward.</td></tr>
           <tr><td class="field-name">fOffline</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>Indicates whether the transaction is from an EOV (or OFFLINE) case or an ONLINE case. If <code>fOffline</code> is true, the transaction is from an EOV (or OFFLINE) case; otherwise, the transaction is ONLINE.</td></tr>
           <tr><td class="field-name">lszCustomerReference</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>Customer reference number from the payment record.</td></tr>
           <tr><td class="field-name">szReferenceNumber</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>Retrieval Reference Number (RRN) assigned to the transaction. This is different from <code>lszCustomerReference</code>, which contains the POS/customer transaction reference (<code>TxnRef</code>).</td></tr>
           <tr><td class="field-name">lszReferenceNumberKey</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>Reference number search key.</td></tr>
           <tr><td class="field-name">lszApprovalCodeKey</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>Approval code search key.</td></tr>
           <tr><td class="field-name">lszSequenceNumber</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>Sequence number from the payment record.</td></tr>
-          <tr><td class="field-name">Date</td><td class="field-type">string(8)</td><td><span class="badge badge-o">O</span></td><td>The Date is used for searching. Formatted as <code>YYYYMMDD</code>.</td></tr>
-          <tr><td class="field-name">Time</td><td class="field-type">string(10)</td><td><span class="badge badge-o">O</span></td><td>The Time is used for searching. Formatted as <code>hh:mm:ss</code>.</td></tr>
+          <tr><td class="field-name">Date</td><td class="field-type">string(8)</td><td><span class="badge badge-o">O</span></td><td>Date used for searching, formatted as <code>YYYYMMDD</code>.</td></tr>
+          <tr><td class="field-name">Time</td><td class="field-type">string(10)</td><td><span class="badge badge-o">O</span></td><td>Time used for searching, formatted as <code>hh:mm:ss</code>.</td></tr>
           <tr><td class="field-name">AuthorizationExpiryDate</td><td class="field-type">string(8)</td><td><span class="badge badge-o">O</span></td><td>Authorization expiry date. Formatted as <code>YYYYMMDD</code>.</td></tr>
           <tr><td class="field-name">szAuthorizationResponseCode</td><td class="field-type">string</td><td><span class="badge badge-m">M</span></td><td>The approval response code of the transaction.</td></tr>
           <tr><td class="field-name">lszApprovalCode</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>The approval code of the transaction.</td></tr>
-          <tr><td class="field-name">lszSTAN</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>The Systems Trace Audit Number of the transaction.</td></tr>
+          <tr><td class="field-name">lszSTAN</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>The System Trace Audit Number of the transaction.</td></tr>
           <tr><td class="field-name">TRV</td><td class="field-type">string(15)</td><td><span class="badge badge-o">O</span></td><td>Transaction reference value.</td></tr>
           <tr><td class="field-name">IssuerRRN</td><td class="field-type">string(15)</td><td><span class="badge badge-o">O</span></td><td>Issuer retrieval reference number.</td></tr>
           <tr><td class="field-name">szIssuerId</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>Issuer identifier.</td></tr>
@@ -1463,12 +1460,12 @@ Content-Length: 1
           <tr><td class="field-name">szZipCode</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>Cardholder postal code (MOTO).</td></tr>
           <tr><td class="field-name">iReversalReason</td><td class="field-type">uint</td><td><span class="badge badge-m">M</span></td><td>The reason for reversal. See <a class="doc-table-ref" href="#ref-enum-07">Table ENUM-07</a>.</td></tr>
           <tr><td class="field-name">szProcessedLaterNumber</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>Processed-later reference number when applicable.</td></tr>
-          <tr><td class="field-name">lszCardLogo</td><td class="field-type">string</td><td><span class="badge badge-m">M</span></td><td>Card Logo.</td></tr>
-          <tr><td class="field-name">szQRCode</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>The URL address storing the transaction receipt.</td></tr>
-          <tr><td class="field-name">byPinType</td><td class="field-type">byte</td><td><span class="badge badge-m">M</span></td><td>Pin Type. See <a class="doc-table-ref" href="#ref-enum-08">Table ENUM-08</a>.</td></tr>
-          <tr><td class="field-name">byPinStatus</td><td class="field-type">byte</td><td><span class="badge badge-m">M</span></td><td>Pin Status. See <a class="doc-table-ref" href="#ref-enum-09">Table ENUM-09</a>.</td></tr>
-          <tr><td class="field-name">iNoCVVOption</td><td class="field-type">uint</td><td><span class="badge badge-m">M</span></td><td>The reason of the no CVV.</td></tr>
-          <tr><td class="field-name">byCDCVM</td><td class="field-type">byte</td><td><span class="badge badge-m">M</span></td><td>The cvm value of card.</td></tr>
+          <tr><td class="field-name">lszCardLogo</td><td class="field-type">string</td><td><span class="badge badge-m">M</span></td><td>Card logo.</td></tr>
+          <tr><td class="field-name">szQRCode</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>URL of the stored transaction receipt.</td></tr>
+          <tr><td class="field-name">byPinType</td><td class="field-type">byte</td><td><span class="badge badge-m">M</span></td><td>PIN type. See <a class="doc-table-ref" href="#ref-enum-08">Table ENUM-08</a>.</td></tr>
+          <tr><td class="field-name">byPinStatus</td><td class="field-type">byte</td><td><span class="badge badge-m">M</span></td><td>PIN status. See <a class="doc-table-ref" href="#ref-enum-09">Table ENUM-09</a>.</td></tr>
+          <tr><td class="field-name">iNoCVVOption</td><td class="field-type">uint</td><td><span class="badge badge-m">M</span></td><td>The reason no CVV was provided.</td></tr>
+          <tr><td class="field-name">byCDCVM</td><td class="field-type">byte</td><td><span class="badge badge-m">M</span></td><td>The CDCVM (Consumer Device Cardholder Verification Method) value of the card.</td></tr>
           <tr><td class="field-name">iAccountType</td><td class="field-type">uint</td><td><span class="badge badge-m">M</span></td><td>The account type of transaction. See <a class="doc-table-ref" href="#ref-enum-02">Table ENUM-02</a>.</td></tr>
           <tr><td class="field-name">lszEndCardNumber</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>The last four digits of the card number used to perform this transaction.</td></tr>
           <tr><td class="field-name">szMaskedCardNumber</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>Masked card number returned when available.</td></tr>
@@ -1656,7 +1653,7 @@ Content-Length: 1
           <tr><td class="field-name">zh_CN</td><td>Chinese (PRC)</td><td>3</td></tr>
           <tr><td class="field-name">zh_TW</td><td>Chinese (Taiwan)</td><td>4</td></tr>
           <tr><td class="field-name">cs_CZ</td><td>Czech (Czech Republic)</td><td>5</td></tr>
-          <tr><td class="field-name">nl_BE</td><td>Dutch (Netherlands)</td><td>6</td></tr>
+          <tr><td class="field-name">nl_BE</td><td>Dutch (Belgium)</td><td>6</td></tr>
           <tr><td class="field-name">en_AU</td><td>English (Australia)</td><td>7</td></tr>
           <tr><td class="field-name">en_GB</td><td>English (Britain)</td><td>8</td></tr>
           <tr><td class="field-name">en_CA</td><td>English (Canada)</td><td>9</td></tr>
@@ -1693,9 +1690,9 @@ Content-Length: 1
           <tr><td class="field-name">in_ID</td><td>Indonesian (Indonesia)</td><td>40</td></tr>
           <tr><td class="field-name">lt_LT</td><td>Lithuanian (Lithuania)</td><td>41</td></tr>
           <tr><td class="field-name">lv_LV</td><td>Latvian (Latvia)</td><td>42</td></tr>
-          <tr><td class="field-name">nb_NO</td><td>Norwegian-Bokmol (Norway)</td><td>43</td></tr>
+          <tr><td class="field-name">nb_NO</td><td>Norwegian Bokmål (Norway)</td><td>43</td></tr>
           <tr><td class="field-name">pt_BR</td><td>Portuguese (Brazil)</td><td>44</td></tr>
-          <tr><td class="field-name">sr_RS</td><td>Serbian (Cyrillic,Serbia)</td><td>45</td></tr>
+          <tr><td class="field-name">sr_RS</td><td>Serbian (Cyrillic, Serbia)</td><td>45</td></tr>
           <tr><td class="field-name">sk_SK</td><td>Slovak (Slovakia)</td><td>46</td></tr>
           <tr><td class="field-name">sl_SI</td><td>Slovenian (Slovenia)</td><td>47</td></tr>
           <tr><td class="field-name">es_US</td><td>Spanish (US)</td><td>48</td></tr>
@@ -1851,7 +1848,7 @@ Content-Length: 1
   <div class="section-container txn-subsection" id="purchase">
     <div class="middle-col">
       <h3 class="subsection-title">Purchase <span class="txn-type-badge">TxnType: <code>P</code></span></h3>
-      <div class="section-desc"><p>The purchase transaction type allows the merchant to perform a sale, it uses the transaction request format.</p></div>
+      <div class="section-desc"><p>The purchase transaction type allows the merchant to perform a sale. It uses the transaction request format.</p></div>
       <p class="txn-common-ref">Also uses all <a class="doc-table-ref" href="#transaction">common request fields</a>. Response structure is defined in <a class="doc-table-ref" href="#transaction-response">Transaction Response</a>.</p>
       <div class="table-label">Type-Specific Request Fields</div>
       <table class="field-table">
@@ -1859,8 +1856,8 @@ Content-Length: 1
         <tbody>
           <tr><td class="field-name">TxnType</td><td class="field-type">string(3)</td><td><span class="badge badge-m">M</span></td><td>Must be <code>"P"</code> (Purchase).</td></tr>
           <tr><td class="field-name">Amount</td><td class="field-type">long</td><td><span class="badge badge-m">M</span></td><td>Amount of sale in cents. Must be greater than 0.</td></tr>
-          <tr><td class="field-name">EnableTip</td><td class="field-type">bool</td><td><span class="badge badge-o">O</span></td><td>Indicates could Tip or not. Default <code>'0'</code> (Disabled Tip). See <a class="doc-table-ref" href="#transaction">EnableTip notes</a>.</td></tr>
-          <tr><td class="field-name">AmtTip</td><td class="field-type">long</td><td><span class="badge badge-o">O</span></td><td>AmtTip of the sale in cents.</td></tr>
+          <tr><td class="field-name">EnableTip</td><td class="field-type">bool</td><td><span class="badge badge-o">O</span></td><td>Whether tip entry is offered. Default disabled. See <a class="doc-table-ref" href="#transaction">EnableTip notes</a>.</td></tr>
+          <tr><td class="field-name">AmtTip</td><td class="field-type">long</td><td><span class="badge badge-o">O</span></td><td>Tip amount of the sale in cents.</td></tr>
         </tbody>
       </table>
     </div>
@@ -1886,7 +1883,7 @@ Content-Length: 1
   <div class="section-container txn-subsection" id="refund">
     <div class="middle-col">
       <h3 class="subsection-title">Refund Amount <span class="txn-type-badge">TxnType: <code>R</code></span></h3>
-      <div class="section-desc"><p>A refund transaction type allows the merchant to refund a sale, it uses the transaction request format.</p></div>
+      <div class="section-desc"><p>The refund transaction type allows the merchant to refund a sale. It uses the transaction request format.</p></div>
       <p class="txn-common-ref">Also uses all <a class="doc-table-ref" href="#transaction">common request fields</a>. Response structure is defined in <a class="doc-table-ref" href="#transaction-response">Transaction Response</a>.</p>
       <div class="table-label">Type-Specific Request Fields</div>
       <table class="field-table">
@@ -1917,7 +1914,7 @@ Content-Length: 1
   <div class="section-container txn-subsection" id="cashout">
     <div class="middle-col">
       <h3 class="subsection-title">Cash Only <span class="txn-type-badge">TxnType: <code>C</code></span></h3>
-      <div class="section-desc"><p>The cash-out transaction type allows the merchant to perform a cash-out transaction, it uses the transaction request format.</p></div>
+      <div class="section-desc"><p>The cash-out transaction type allows the merchant to perform a cash-out transaction. It uses the transaction request format.</p></div>
       <p class="txn-common-ref">Also uses all <a class="doc-table-ref" href="#transaction">common request fields</a>. Response structure is defined in <a class="doc-table-ref" href="#transaction-response">Transaction Response</a>.</p>
       <div class="table-label">Type-Specific Request Fields</div>
       <table class="field-table">
@@ -1948,7 +1945,7 @@ Content-Length: 1
   <div class="section-container txn-subsection" id="purchasecash">
     <div class="middle-col">
       <h3 class="subsection-title">Purchase Cash <span class="txn-type-badge">TxnType: <code>PC</code></span></h3>
-      <div class="section-desc"><p>The purchase cash transaction type allows the merchant to perform a sale and also withdraw cash, it uses the transaction request format.</p></div>
+      <div class="section-desc"><p>The purchase cash transaction type allows the merchant to perform a sale and also withdraw cash. It uses the transaction request format.</p></div>
       <p class="txn-common-ref">Also uses all <a class="doc-table-ref" href="#transaction">common request fields</a>. Response structure is defined in <a class="doc-table-ref" href="#transaction-response">Transaction Response</a>.</p>
       <div class="table-label">Type-Specific Request Fields</div>
       <table class="field-table">
@@ -1981,7 +1978,7 @@ Content-Length: 1
   <div class="section-container txn-subsection" id="motopurchase">
     <div class="middle-col">
       <h3 class="subsection-title">MOTO Purchase <span class="txn-type-badge">TxnType: <code>MP</code></span></h3>
-      <div class="section-desc"><p>The moto purchase transaction type allows the merchant to perform a sale with a manually entered transaction that has been generated from a mail order or a telephone order, it uses the transaction request format.</p></div>
+      <div class="section-desc"><p>The MOTO Purchase transaction type allows the merchant to perform a sale with a manually entered transaction that has been generated from a mail order or a telephone order. It uses the transaction request format.</p></div>
       <p class="txn-common-ref">Also uses all <a class="doc-table-ref" href="#transaction">common request fields</a>. Response structure is defined in <a class="doc-table-ref" href="#transaction-response">Transaction Response</a>.</p>
       <div class="table-label">Type-Specific Request Fields</div>
       <table class="field-table">
@@ -1990,7 +1987,7 @@ Content-Length: 1
           <tr><td class="field-name">TxnType</td><td class="field-type">string(3)</td><td><span class="badge badge-m">M</span></td><td>Must be <code>"MP"</code> (MOTO Purchase).</td></tr>
           <tr><td class="field-name">Amount</td><td class="field-type">long</td><td><span class="badge badge-m">M</span></td><td>Amount in cents. Must be greater than 0.</td></tr>
           <tr><td class="field-name">EnableTip</td><td class="field-type">bool</td><td><span class="badge badge-o">O</span></td><td>Whether tip entry is offered. Default disabled.</td></tr>
-          <tr><td class="field-name">AmtTip</td><td class="field-type">long</td><td><span class="badge badge-o">O</span></td><td>AmtTip of the sale in cents.</td></tr>
+          <tr><td class="field-name">AmtTip</td><td class="field-type">long</td><td><span class="badge badge-o">O</span></td><td>Tip amount of the sale in cents.</td></tr>
           <tr><td class="field-name">Pan</td><td class="field-type">string(20)</td><td><span class="badge badge-o">O</span></td><td>Card number. If omitted, operator enters on terminal.</td></tr>
           <tr><td class="field-name">DateExpiry</td><td class="field-type">string(4)</td><td><span class="badge badge-o">O</span></td><td>Card expiry in <code>MMYY</code> format.</td></tr>
           <tr><td class="field-name">CVV</td><td class="field-type">string(3)</td><td><span class="badge badge-o">O</span></td><td>Card CVV/CVC.</td></tr>
@@ -2020,17 +2017,17 @@ Content-Length: 1
     </div>
   </div>
 
-  <!--  TXN SUB: MOTO Refund Amount  -->
+  <!--  TXN SUB: MOTO Refund  -->
   <div class="section-container txn-subsection" id="motorefund">
     <div class="middle-col">
-      <h3 class="subsection-title">MOTO Refund Amount <span class="txn-type-badge">TxnType: <code>MR</code></span></h3>
-      <div class="section-desc"><p>A moto refund transaction type allows the merchant to refund a sale with a manually entered transaction, it uses the transaction request format.</p></div>
+      <h3 class="subsection-title">MOTO Refund <span class="txn-type-badge">TxnType: <code>MR</code></span></h3>
+      <div class="section-desc"><p>The MOTO Refund transaction type allows the merchant to refund a sale with a manually entered transaction. It uses the transaction request format.</p></div>
       <p class="txn-common-ref">Also uses all <a class="doc-table-ref" href="#transaction">common request fields</a>. Response structure is defined in <a class="doc-table-ref" href="#transaction-response">Transaction Response</a>.</p>
       <div class="table-label">Type-Specific Request Fields</div>
       <table class="field-table">
         <thead><tr><th>Field Name</th><th>Type (Max Length)</th><th>M/O</th><th>Description</th></tr></thead>
         <tbody>
-          <tr><td class="field-name">TxnType</td><td class="field-type">string(3)</td><td><span class="badge badge-m">M</span></td><td>Must be <code>"MR"</code> (MOTO Refund Amount).</td></tr>
+          <tr><td class="field-name">TxnType</td><td class="field-type">string(3)</td><td><span class="badge badge-m">M</span></td><td>Must be <code>"MR"</code> (MOTO Refund).</td></tr>
           <tr><td class="field-name">Amount</td><td class="field-type">long</td><td><span class="badge badge-m">M</span></td><td>Refund amount in cents. Must be greater than 0.</td></tr>
           <tr><td class="field-name">Pan</td><td class="field-type">string(20)</td><td><span class="badge badge-o">O</span></td><td>Card number.</td></tr>
           <tr><td class="field-name">DateExpiry</td><td class="field-type">string(4)</td><td><span class="badge badge-o">O</span></td><td>Card expiry in <code>MMYY</code>.</td></tr>
@@ -2041,9 +2038,9 @@ Content-Length: 1
     </div>
     <div class="right-col">
       <div class="code-block-wrap">
-        <div class="code-block-label">Request Example — MOTO Refund Amount</div>
+        <div class="code-block-label">Request Example — MOTO Refund</div>
         <pre><code class="language-json">{
-  "Merchant": "00",
+  "Merchant": "01",
   "TxnType": "MR",
   "Amount": 100,
   "TxnRef": "{{txnRef}}",
@@ -2106,7 +2103,7 @@ Content-Length: 1
   <div class="section-container txn-subsection" id="preauth">
     <div class="middle-col">
       <h3 class="subsection-title">Pre-auth <span class="txn-type-badge">TxnType: <code>PA</code></span></h3>
-      <div class="section-desc"><p>A pre-auth transaction type allows the merchant to pre-auth a sale, it uses the transaction request format.</p></div>
+      <div class="section-desc"><p>The pre-auth transaction type allows the merchant to pre-authorize a sale. It uses the transaction request format.</p></div>
       <p class="txn-common-ref">Also uses all <a class="doc-table-ref" href="#transaction">common request fields</a>. Response structure is defined in <a class="doc-table-ref" href="#transaction-response">Transaction Response</a>.</p>
       <div class="table-label">Type-Specific Request Fields</div>
       <table class="field-table">
@@ -2121,11 +2118,11 @@ Content-Length: 1
         <figure class="doc-figure">
           <img src="maxstore-is-max-amount.png" alt="MaxStore maximum amount configuration for IsMaxAmount">
         </figure>
-        <span class="doc-figure-caption"><strong>MaxStore maximum amount configuration</strong> — replace this placeholder image with the actual configuration screenshot.</span>
+        <span class="doc-figure-caption"><strong>MaxStore maximum amount configuration</strong> — the <strong>Unattended Max Amount</strong> setting used when <code>IsMaxAmount</code> is enabled.</span>
       </div>
       <div class="info-card" style="margin-top:14px;">
         <h4>After approval</h4>
-         <p>Save <code>lszApprovalCode</code>, <code>lszSTAN</code>, and <code>szReferenceNumber</code> (RRN) from <code>Response.Transaction</code>. Set <code>lszSTAN</code> to the last six characters of <code>szReferenceNumber</code>. Store these identifiers in your POS; <a class="doc-table-ref" href="#searchtransaction">Search Transaction</a> uses the saved RRN and approval code (<code>AuthId</code>) to locate and confirm the matching record. Use <code>PreAuthInquiry</code> for Complete, Increment, Extended, or Reversal, and <code>PreAuthCompleteInquiry</code> for Delayed. See <a class="doc-table-ref" href="#preauth-family">Pre-auth Guide</a>.</p>
+         <p>Save <code>lszApprovalCode</code>, <code>lszSTAN</code>, and <code>szReferenceNumber</code> (RRN) from <code>Response.Transaction</code>. Set <code>lszSTAN</code> to the last six characters of <code>szReferenceNumber</code>. Store these identifiers in your POS; <a class="doc-table-ref" href="#searchtransaction">Search Transaction</a> uses the saved RRN and approval code (<code>AuthId</code>) to locate and confirm the matching record. Use <code>PreAuthInquiry</code> for Complete, Cancel, Increment, Extended, or Reversal, and <code>PreAuthCompleteInquiry</code> for Delayed. See <a class="doc-table-ref" href="#preauth-family">Pre-auth Guide</a>.</p>
       </div>
     </div>
     <div class="right-col">
@@ -2148,7 +2145,7 @@ Content-Length: 1
   <div class="section-container txn-subsection" id="preauthcomplete">
     <div class="middle-col">
       <h3 class="subsection-title">Pre-auth Complete <span class="txn-type-badge">TxnType: <code>AC</code></span></h3>
-      <div class="section-desc"><p>A preauth complete transaction type allows the merchant to complete a preauth sale.</p></div>
+      <div class="section-desc"><p>The pre-auth complete transaction type allows the merchant to complete a pre-auth sale.</p></div>
       <p class="txn-common-ref">Also uses all <a class="doc-table-ref" href="#transaction">common request fields</a>. Response structure is defined in <a class="doc-table-ref" href="#transaction-response">Transaction Response</a>.</p>
       <div class="table-label">Type-Specific Request Fields</div>
       <table class="field-table">
@@ -2228,7 +2225,7 @@ Content-Length: 1
   <div class="section-container txn-subsection" id="preauthtopup">
     <div class="middle-col">
       <h3 class="subsection-title">Pre-auth Increment <span class="txn-type-badge">TxnType: <code>PT</code></span></h3>
-      <div class="section-desc"><p>A preauth increment transaction type enables the merchant to increase the amount of a preauth sale by adding a new amount to the previous preauth.</p></div>
+      <div class="section-desc"><p>The pre-auth increment transaction type enables the merchant to increase the amount of a pre-auth sale by adding a new amount to the previous pre-auth.</p></div>
       <p class="txn-common-ref">Also uses all <a class="doc-table-ref" href="#transaction">common request fields</a>. Response structure is defined in <a class="doc-table-ref" href="#transaction-response">Transaction Response</a>.</p>
       <div class="table-label">Type-Specific Request Fields</div>
       <table class="field-table">
@@ -2272,7 +2269,7 @@ Content-Length: 1
   <div class="section-container txn-subsection" id="preauthdelayed">
     <div class="middle-col">
       <h3 class="subsection-title">Pre-auth Delayed <span class="txn-type-badge">TxnType: <code>PD</code></span></h3>
-      <div class="section-desc"><p>A preauth delayed transaction type is an optional message that may be sent when additional goods or services have been delivered after the final completion has been processed.</p></div>
+      <div class="section-desc"><p>The pre-auth delayed transaction type is an optional message that may be sent when additional goods or services have been delivered after the final completion has been processed.</p></div>
       <p class="txn-common-ref">Also uses all <a class="doc-table-ref" href="#transaction">common request fields</a>. Response structure is defined in <a class="doc-table-ref" href="#transaction-response">Transaction Response</a>.</p>
       <div class="table-label">Type-Specific Request Fields</div>
       <table class="field-table">
@@ -2312,11 +2309,11 @@ Content-Length: 1
     </div>
   </div>
 
-  <!--  TXN SUB: Extended Pre-Auth  -->
+  <!--  TXN SUB: Extended Pre-auth  -->
   <div class="section-container txn-subsection" id="preauthextended">
     <div class="middle-col">
-      <h3 class="subsection-title">Extended Pre-Auth <span class="txn-type-badge">TxnType: <code>PE</code></span></h3>
-      <div class="section-desc"><p>Extended Pre-Auth extends a legacy pre-auth record. An amount is not required for <code>PE</code>. The original record is identified by <code>lszApprovalCode</code> and <code>RRN</code>.</p></div>
+      <h3 class="subsection-title">Extended Pre-auth <span class="txn-type-badge">TxnType: <code>PE</code></span></h3>
+      <div class="section-desc"><p>Extended Pre-auth extends a legacy pre-auth record. An amount is not required for <code>PE</code>. The original record is identified by <code>lszApprovalCode</code> and <code>RRN</code>.</p></div>
       <p class="txn-common-ref">Also uses all <a class="doc-table-ref" href="#transaction">common request fields</a>. Response structure is defined in <a class="doc-table-ref" href="#transaction-response">Transaction Response</a>.</p>
       <div class="table-label">Type-Specific Request Fields</div>
       <table class="field-table">
@@ -2339,7 +2336,7 @@ Content-Length: 1
     <div class="right-col">
       <div class="url-block"><div class="url-block-label">Endpoint</div><div class="endpoint-url"><span class="http-method">POST</span> https://<span class="url-var">{{pos-server}}</span>:<span class="url-var">{{pos-port}}</span>/v1/sessions/<span class="url-var">{{sessionId}}</span>/transaction</div></div>
       <div class="code-block-wrap">
-        <div class="code-block-label">Request Example — Extended Pre-Auth</div>
+        <div class="code-block-label">Request Example — Extended Pre-auth</div>
         <pre><code class="language-json">{
   "Merchant": "01",
   "TxnType": "PE",
@@ -2357,14 +2354,14 @@ Content-Length: 1
   <!--  TXN SUB: Pre-auth Reversal  -->
   <div class="section-container txn-subsection" id="preauthreversal">
     <div class="middle-col">
-      <h3 class="subsection-title">Pre-Auth Reversal <span class="txn-type-badge">TxnType: <code>PR</code></span></h3>
-      <div class="section-desc"><p>Pre-Auth Reversal reverses an open pre-auth. Uses <code>POST .../transaction</code> with <code>TxnType: "PR"</code>.</p></div>
+      <h3 class="subsection-title">Pre-auth Reversal <span class="txn-type-badge">TxnType: <code>PR</code></span></h3>
+      <div class="section-desc"><p>Pre-auth Reversal reverses an open pre-auth. Uses <code>POST .../transaction</code> with <code>TxnType: "PR"</code>.</p></div>
       <p class="txn-common-ref">Also uses all <a class="doc-table-ref" href="#transaction">common request fields</a>. Response structure is defined in <a class="doc-table-ref" href="#transaction-response">Transaction Response</a>.</p>
       <div class="table-label">Type-Specific Request Fields</div>
       <table class="field-table">
         <thead><tr><th>Field Name</th><th>Type (Max Length)</th><th>M/O</th><th>Description</th></tr></thead>
         <tbody>
-          <tr><td class="field-name">TxnType</td><td class="field-type">string(3)</td><td><span class="badge badge-m">M</span></td><td>Must be <code>"PR"</code> (Pre-Auth Reversal).</td></tr>
+          <tr><td class="field-name">TxnType</td><td class="field-type">string(3)</td><td><span class="badge badge-m">M</span></td><td>Must be <code>"PR"</code> (Pre-auth Reversal).</td></tr>
           <tr><td class="field-name">Amount</td><td class="field-type">long</td><td><span class="badge badge-m">M</span></td><td>Reversal amount in cents. Pass the amount for the reversal transaction.</td></tr>
           <tr><td class="field-name">RRN</td><td class="field-type">string(12)</td><td><span class="badge badge-m">M</span></td><td>Retrieval reference number from the original Pre-auth.</td></tr>
           <tr><td class="field-name">lszApprovalCode</td><td class="field-type">string</td><td><span class="badge badge-m">M</span></td><td>Approval code from the original Pre-auth (<code>PA</code>).</td></tr>
@@ -2381,7 +2378,7 @@ Content-Length: 1
     </div>
     <div class="right-col">
       <div class="code-block-wrap">
-        <div class="code-block-label">Request Example — Pre-Auth Reversal</div>
+        <div class="code-block-label">Request Example — Pre-auth Reversal</div>
         <pre><code class="language-json">{
   "Merchant": "01",
   "TxnType": "PR",
@@ -2410,7 +2407,7 @@ Content-Length: 1
           <tr><td class="field-name">Merchant</td><td class="field-type">string(2)</td><td><span class="badge badge-o">O</span></td><td>Specify the merchant to execute the transaction. See <a class="doc-table-ref" href="#ref-req-01">Table REQ-01</a>.</td></tr>
           <tr><td class="field-name">FuncType</td><td class="field-type">string(22)</td><td><span class="badge badge-m">M</span></td><td>Type of stored records to retrieve. Controls which follow-up operations the results support — see <a class="doc-table-ref" href="#ref-enum-11">Table ENUM-11</a>.</td></tr>
           <tr><td class="field-name">TxnRef</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>Optional transaction reference filter.</td></tr>
-          <tr><td class="field-name">RRN</td><td class="field-type">string(12)</td><td><span class="badge badge-m">M*</span></td><td>Required as the full retrieval reference for <code>PreAuthInquiry</code> and <code>PreAuthCompleteInquiry</code>; for <code>Reprint</code>, use the last six digits of the stored RRN as the optional local suffix filter.</td></tr>
+          <tr><td class="field-name">RRN</td><td class="field-type">string(12)</td><td><span class="badge badge-m">M*</span></td><td>Required as the full retrieval reference for <code>PreAuthInquiry</code> and <code>PreAuthCompleteInquiry</code>; for <code>Reprint</code>, use the last six characters of the stored RRN as the optional local suffix filter.</td></tr>
           <tr><td class="field-name">TRV</td><td class="field-type">string(15)</td><td><span class="badge badge-o">O</span></td><td>Optional gateway filter for <code>PreAuthInquiry</code> and <code>PreAuthCompleteInquiry</code>; not used for <code>Reprint</code>.</td></tr>
           <tr><td class="field-name">AuthId</td><td class="field-type">string(6)</td><td><span class="badge badge-m">M*</span></td><td>Original transaction's <code>lszApprovalCode</code>. Required for <code>PreAuthInquiry</code> and <code>PreAuthCompleteInquiry</code>; omit for <code>Reprint</code>.</td></tr>
           <tr><td class="field-name">Stan</td><td class="field-type">string(6)</td><td><span class="badge badge-o">O</span></td><td>Optional. Passed to the gateway for either pre-auth inquiry type; used as a database filter for <code>Reprint</code>.</td></tr>
@@ -2443,11 +2440,11 @@ Content-Length: 1
       <div id="ref-enum-11" class="ref-table-anchor" style="margin-top:20px;">
         <div class="table-label">Table ENUM-11 — FuncType field values</div>
         <p class="ref-table-caption">Enum table — colocated with <a class="doc-table-ref" href="#searchtransaction">Search Transaction</a>. Also in <a class="doc-table-ref" href="#ref-tables-index">Table Index</a>.</p>
-        <p class="ref-table-caption">Use <code>FuncType</code> to select the search purpose. For example, to find the original pre-auth before a Pre-auth Complete, set <code>FuncType</code> to <code>"PreAuthInquiry"</code> and send both <code>RRN</code> and <code>AuthId</code>. For <code>Reprint</code>, use the last six digits of the stored RRN. <code>Date</code> and <code>Time</code> are accepted request fields but are not applied by the current POS Integration runtime.</p>
+        <p class="ref-table-caption">Use <code>FuncType</code> to select the search purpose. For example, to find the original pre-auth before a Pre-auth Complete, set <code>FuncType</code> to <code>"PreAuthInquiry"</code> and send both <code>RRN</code> and <code>AuthId</code>. For <code>Reprint</code>, use the last six characters of the stored RRN. <code>Date</code> and <code>Time</code> are accepted request fields but are not applied by the current POS Integration runtime.</p>
         <table class="field-table">
           <thead><tr><th>FuncType</th><th>Purpose</th></tr></thead>
           <tbody>
-            <tr><td class="field-name">PreAuthInquiry</td><td>Find the original Pre-auth (<code>PA</code>) for Complete (<code>AC</code>), Increment (<code>PT</code>), Reversal (<code>PR</code>), or Extend (<code>PE</code>).</td></tr>
+            <tr><td class="field-name">PreAuthInquiry</td><td>Find the original Pre-auth (<code>PA</code>) for Complete (<code>AC</code>), Cancel (<code>PAC</code>), Increment (<code>PT</code>), Reversal (<code>PR</code>), or Extended (<code>PE</code>).</td></tr>
             <tr><td class="field-name">PreAuthCompleteInquiry</td><td>Find the completed Pre-auth (<code>AC</code>) for Delayed (<code>PD</code>).</td></tr>
             <tr><td class="field-name">Reprint</td><td>Search matching print jobs stored on the terminal.</td></tr>
           </tbody>
@@ -2476,11 +2473,11 @@ Content-Length: 1
           <tr><td class="field-name">Transactions</td><td class="field-type">array</td><td><span class="badge badge-m">M</span></td><td>Array of transaction-detail items. May contain 0, 1, or many records. Items use the fields returned for the selected search mode; absent fields must be treated as optional.</td></tr>
         </tbody>
       </table>
-      <p class="txn-common-ref" style="margin-top:12px;">Do not require fields such as <code>Merchant</code>, <code>TxnType</code>, <code>OrderID</code>, or <code>ResponseText</code> on every search item. Enum values shared with transaction responses are in <a class="doc-table-ref" href="#transaction-response">Transaction Response</a> → Reference — Field Enums (Tables 12.5.2–12.5.6).</p>
+      <p class="txn-common-ref" style="margin-top:12px;">Do not require fields such as <code>Merchant</code>, <code>TxnType</code>, <code>OrderID</code>, or <code>ResponseText</code> on every search item. Enum values shared with transaction responses are in <a class="doc-table-ref" href="#transaction-response">Transaction Response</a> → <a class="doc-table-ref" href="#transaction-field-enums">Reference — Field Enums</a>.</p>
     </div>
     <div class="right-col">
       <div class="url-block"><div class="url-block-label">Endpoint</div><div class="endpoint-url"><span class="http-method">POST</span> https://<span class="url-var">{{pos-server}}</span>:<span class="url-var">{{pos-port}}</span>/v1/sessions/<span class="url-var">{{sessionId}}</span>/transactionsearch</div></div>
-      <div class="code-block-wrap"><div class="code-block-label">Request Example — look up a pre-auth for Complete, Increment, or Reversal</div>
+      <div class="code-block-wrap"><div class="code-block-label">Request Example — look up a pre-auth for Complete, Cancel, Increment, Extended, or Reversal</div>
         <pre><code class="language-json">{
   "Merchant": "01",
   "FuncType": "PreAuthInquiry",
@@ -2522,21 +2519,21 @@ Content-Length: 1
   <div class="section-container" id="reprint">
     <div class="middle-col">
       <h2 class="section-title">Reprint Receipt</h2>
-      <div class="section-desc"><p>Reprints the receipt of any approved transaction.</p><p>Uses the <code>POST .../reprint</code> endpoint. Use <code>FuncType: "Reprint"</code> in Search Transaction, then submit the last six digits of the selected transaction's <code>szReferenceNumber</code> as the reprint request <code>RRN</code>.</p></div>
+      <div class="section-desc"><p>Reprints the receipt of any approved transaction.</p><p>Uses the <code>POST .../reprint</code> endpoint. Use <code>FuncType: "Reprint"</code> in Search Transaction, then submit the last six characters of the selected transaction's <code>szReferenceNumber</code> as the reprint request <code>RRN</code>.</p></div>
       <div class="table-label" id="reprint-request" style="margin-top:20px;">Reprint request fields</div>
       <table class="field-table">
         <thead><tr><th>Field Name</th><th>Type (Max Length)</th><th>M/O</th><th>Description</th></tr></thead>
         <tbody>
           <tr><td class="field-name">Merchant</td><td class="field-type">string(2)</td><td><span class="badge badge-o">O</span></td><td>Merchant to execute the reprint. See <a class="doc-table-ref" href="#ref-req-01">Table REQ-01</a>.</td></tr>
-          <tr><td class="field-name">RRN</td><td class="field-type">string(6)</td><td><span class="badge badge-m">M</span></td><td>Last six digits of the stored retrieval reference number (RRN suffix). Native validation rejects an empty value.</td></tr>
+          <tr><td class="field-name">RRN</td><td class="field-type">string(12)</td><td><span class="badge badge-m">M</span></td><td>Last six characters of the stored retrieval reference number (RRN suffix), matched against the end of the stored RRN. Values shorter than six characters are rejected; the full RRN is also accepted. Native validation rejects an empty value.</td></tr>
           <tr><td class="field-name">WithReceiptImageData</td><td class="field-type">bool</td><td><span class="badge badge-o">O</span></td><td>Requests supplementary receipt image/signature data when generated. Receipt content is controlled by <code>ReceiptType</code>.</td></tr>
           <tr><td class="field-name">ReceiptType</td><td class="field-type">int</td><td><span class="badge badge-o">O</span></td><td>Receipt format. See <a class="doc-table-ref" href="#ref-req-02">Table REQ-02</a>.</td></tr>
-          <tr><td class="field-name">PlainTextCharPerLine</td><td class="field-type">short</td><td><span class="badge badge-o">O</span></td><td>Plain-text receipt width.</td></tr>
+          <tr><td class="field-name">PlainTextCharPerLine</td><td class="field-type">int</td><td><span class="badge badge-o">O</span></td><td>Plain-text receipt width.</td></tr>
           <tr><td class="field-name">DisablePrinting</td><td class="field-type">bool</td><td><span class="badge badge-o">O</span></td><td>If enabled, disable physical receipt printing.</td></tr>
           <tr><td class="field-name">RunInBackground</td><td class="field-type">bool</td><td><span class="badge badge-o">O</span></td><td>If enabled, run the reprint without displaying the transaction flow.</td></tr>
         </tbody>
       </table>
-<div class="info-card" style="margin-top:14px;"><h4>Reprint request note</h4><p>The public contract uses <code>RRN</code> and the fields listed above. For this endpoint, the supported RRN input is the last six digits of the stored RRN; the selected suffix identifies the stored print job. The runtime may also accept legacy compatibility fields such as <code>PID</code>, <code>Application</code>, <code>ReceiptAutoPrint</code>, <code>CutReceipt</code>, <code>ReprintType</code>, <code>OriginalTxnRef</code>, <code>Type</code>, <code>lszApprovalCode</code>, and <code>lszSTAN</code>; these are not required by this contract.</p></div>
+<div class="info-card" style="margin-top:14px;"><h4>Reprint request note</h4><p>The public contract uses <code>RRN</code> and the fields listed above. For this endpoint, the supported RRN input is the last six characters of the stored RRN; the suffix identifies the stored print job, and the most recent matching print job is used. The runtime may also accept legacy compatibility fields such as <code>PID</code>, <code>Application</code>, <code>ReceiptAutoPrint</code>, <code>CutReceipt</code>, <code>ReprintType</code>, <code>OriginalTxnRef</code>, <code>Type</code>, <code>lszApprovalCode</code>, and <code>lszSTAN</code>; these are not required by this contract.</p></div>
       <div class="table-label" id="reprint-response">Reprint response fields</div>
       <table class="field-table">
         <thead><tr><th>Property</th><th>Type</th><th>M/O</th><th>Description</th></tr></thead>
@@ -2700,7 +2697,7 @@ Content-Length: 1
         <thead><tr><th>Property</th><th>Type</th><th>M/O</th><th>Description</th></tr></thead>
         <tbody>
           <tr><td class="field-name">CodeType</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>Requested code format: <code>QrCode</code>, <code>Barcode</code>, or <code>AutoDetect</code> (case-insensitive). Omit or send empty for <code>AutoDetect</code>.</td></tr>
-          <tr><td class="field-name">Timeout</td><td class="field-type">int</td><td><span class="badge badge-o">O</span></td><td>Scanner timeout. Omit for <code>0</code>; negative values are invalid.</td></tr>
+          <tr><td class="field-name">Timeout</td><td class="field-type">int</td><td><span class="badge badge-o">O</span></td><td>Scanner timeout in seconds. Omit or send <code>0</code> to use the default of <code>60</code> seconds. Negative values are rejected as invalid request data.</td></tr>
           <tr><td class="field-name">FlashOn</td><td class="field-type">bool</td><td><span class="badge badge-o">O</span></td><td>Whether to enable the scanner light.</td></tr>
         </tbody>
       </table>
@@ -2769,7 +2766,7 @@ Content-Length: 1
           <tr><td class="field-name">AccessCode</td><td class="field-type">string(8)</td><td><span class="badge badge-o">O/M</span></td><td>Access code when settlement access-code management is enabled.</td></tr>
           <tr><td class="field-name">ReceiptType</td><td class="field-type">int</td><td><span class="badge badge-o">O</span></td><td>Receipt format. See <a class="doc-table-ref" href="#ref-req-02">Table REQ-02</a>.</td></tr>
           <tr><td class="field-name">WithReceiptImageData</td><td class="field-type">bool</td><td><span class="badge badge-o">O</span></td><td>Requests supplementary receipt image/signature data when generated. Receipt content is controlled by <code>ReceiptType</code>.</td></tr>
-          <tr><td class="field-name">PlainTextCharPerLine</td><td class="field-type">short</td><td><span class="badge badge-o">O</span></td><td>Plain-text receipt width.</td></tr>
+          <tr><td class="field-name">PlainTextCharPerLine</td><td class="field-type">int</td><td><span class="badge badge-o">O</span></td><td>Plain-text receipt width.</td></tr>
           <tr><td class="field-name">DisablePrinting</td><td class="field-type">bool</td><td><span class="badge badge-o">O</span></td><td>Disable receipt printing.</td></tr>
         </tbody>
       </table>
@@ -2949,7 +2946,7 @@ Content-Length: 1
       <table class="field-table">
         <thead><tr><th>Property</th><th>Type</th><th>M/O</th><th>Description</th></tr></thead>
         <tbody>
-          <tr><td class="field-name">SessionId</td><td class="field-type">string(36)</td><td><span class="badge badge-m">M</span></td><td>SessionId of the transaction being cancelled.</td></tr>
+          <tr><td class="field-name">SessionId</td><td class="field-type">string(36)</td><td><span class="badge badge-m">M</span></td><td>SessionId of the transaction being canceled.</td></tr>
           <tr><td class="field-name">ResponseType</td><td class="field-type">string</td><td><span class="badge badge-m">M</span></td><td>Always <code>"canceltransaction"</code>.</td></tr>
           <tr><td class="field-name">Success</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>True = cancellation request accepted; false = cancellation declined.</td></tr>
           <tr><td class="field-name">ResponseText</td><td class="field-type">string</td><td><span class="badge badge-m">M</span></td><td>Response description.</td></tr>
@@ -3117,7 +3114,7 @@ Content-Length: 1
         <tbody>
           <tr><td class="field-name">OrderID</td><td class="field-type">string(51)</td><td><span class="badge badge-o">O</span></td><td>Optional order identifier. The current native buffer reserves 52 bytes including the terminator, so 51 data characters are the safe maximum. When supplied, it identifies the stored transaction and should match the original transaction request. When omitted, the terminal may still return a stored transaction and the response may omit <code>OrderID</code>.</td></tr>
           <tr><td class="field-name">ReceiptType</td><td class="field-type">int</td><td><span class="badge badge-o">O</span></td><td>Receipt format for returned receipt data. See <a class="doc-table-ref" href="#ref-req-02">Table REQ-02</a>.</td></tr>
-          <tr><td class="field-name">PlainTextCharPerLine</td><td class="field-type">short</td><td><span class="badge badge-o">O</span></td><td>Plain-text receipt width when plain-text receipt output is requested.</td></tr>
+          <tr><td class="field-name">PlainTextCharPerLine</td><td class="field-type">int</td><td><span class="badge badge-o">O</span></td><td>Plain-text receipt width when plain-text receipt output is requested.</td></tr>
         </tbody>
       </table>
       <div class="table-label" style="margin-top:20px;">Response</div>
@@ -3212,7 +3209,7 @@ Content-Length: 1
     <div class="middle-col">
       <h2 class="section-title">Approve Signature</h2>
       <div class="section-desc">
-        <p>This function enables customers to approve signature-required transactions through the client app, provided that <code>AsyncMode</code> is enabled. Call this endpoint when <code>querytransaction</code> returns <code>Status = 11</code> (<code>WaitingForSignatureConfirmationFromClient</code>) with a <code>DigitalSig</code> field — see <a class="doc-table-ref" href="#ref-enum-12">Table ENUM-12</a>.</p>
+        <p>This function lets the POS client submit the merchant's approve/reject decision for a signature-required transaction, provided that <code>AsyncMode</code> is enabled. Call this endpoint when <code>querytransaction</code> returns <code>Status = 11</code> (<code>WaitingForSignatureConfirmationFromClient</code>) with a <code>DigitalSig</code> field — see <a class="doc-table-ref" href="#ref-enum-12">Table ENUM-12</a>.</p>
         <p><strong>Flow:</strong> POS submits transaction (AsyncMode enabled) → polls querytransaction → when Status=11 and DigitalSig present, call approvesignature (same sessionId) with Approval approve/reject → continue polling until Status=1.</p>
       </div>
       <div class="table-label">Request Body Fields</div>
@@ -3273,7 +3270,7 @@ Content-Length: 1
       <table class="field-table">
         <thead><tr><th>Field</th><th>Type</th><th>M/O</th><th>Description</th></tr></thead>
         <tbody>
-          <tr><td class="field-name">Merchant</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>Merchant identifier.</td></tr>
+          <tr><td class="field-name">Merchant</td><td class="field-type">string(2)</td><td><span class="badge badge-o">O</span></td><td>Merchant identifier.</td></tr>
           <tr><td class="field-name">IsStartNewShift</td><td class="field-type">bool</td><td><span class="badge badge-o">O</span></td><td>Whether to start a new shift.</td></tr>
 <tr><td class="field-name">Success</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>Whether the operation succeeded.</td></tr>
 <tr><td class="field-name">ResponseText</td><td class="field-type">string</td><td><span class="badge badge-m">M</span></td><td>Operation result text.</td></tr>
@@ -3321,7 +3318,7 @@ Content-Length: 1
       <table class="field-table">
         <thead><tr><th>Field</th><th>Type</th><th>M/O</th><th>Description</th></tr></thead>
         <tbody>
-          <tr><td class="field-name">Merchant</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>Merchant identifier.</td></tr>
+          <tr><td class="field-name">Merchant</td><td class="field-type">string(2)</td><td><span class="badge badge-o">O</span></td><td>Merchant identifier.</td></tr>
           <tr><td class="field-name">ReceiptType</td><td class="field-type">int</td><td><span class="badge badge-o">O</span></td><td>Receipt output mode. The POS client defaults to <code>2</code> (plain text).</td></tr>
           <tr><td class="field-name">PlainTextCharPerLine</td><td class="field-type">int</td><td><span class="badge badge-o">O</span></td><td>Number of characters per line when plain-text receipt output is requested. The POS client default is <code>30</code>.</td></tr>
           <tr><td class="field-name">DisablePrinting</td><td class="field-type">bool</td><td><span class="badge badge-o">O</span></td><td>Whether receipt printing is disabled.</td></tr>
@@ -3388,10 +3385,10 @@ Content-Length: 1
         </tbody>
       </table>
       <div class="section-desc" style="margin-top:14px;">
-        <p>The <code>device-mode</code> query parameter is optional and applies to all API endpoints that end with <code>/transaction</code>. If you don't include it in the request URL, the system assumes <code>device-mode=off</code> by default, meaning the client and the device are running on separate devices.</p>
+        <p>The <code>device-mode</code> query parameter is optional and applies to all API endpoints that end with <code>/transaction</code>. If you don't include it in the request URL, the system assumes <code>device-mode=off</code> by default, meaning the client and the payment app run on separate devices.</p>
       </div>
-      <div class="table-label" style="margin-top:20px;">Device-mode api request</div>
-      <p class="section-desc" style="margin-top:0;">Devices-mode request looks like this.</p>
+      <div class="table-label" style="margin-top:20px;">Device-mode API request</div>
+      <p class="section-desc" style="margin-top:0;">A device-mode request looks like this.</p>
       <div class="url-block" style="margin-top:12px;">
         <div class="endpoint-url">https://<span class="url-var">{{pos-server}}</span>:<span class="url-var">{{pos-port}}</span>/v1/sessions/<span class="url-var">{{sessionId}}</span>/transaction?device-mode=on</div>
       </div>
