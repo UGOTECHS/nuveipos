@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>On-Premise Integration — Till POS Integration API v1.3.30</title>
+<title>On-Premise Integration — Till POS Integration API v1.3.34</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 <style>
@@ -503,7 +503,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
         <span class="sh-subtitle">Nuvei</span>
       </div>
     </div>
-    <span class="sh-firmware">QA_1.3.30</span>
+    <span class="sh-firmware">QA_1.3.34</span>
   </div>
 
   <div class="nav-group">
@@ -601,8 +601,8 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
           <li>Host Modes: Direct API Device – App 2 App Inter-Link</li>
         </ul>
         <div class="hero-meta">
-          <span class="hero-badge">API v1.3.30</span>
-          <span class="hero-badge">QA_1.3.30</span>
+          <span class="hero-badge">API v1.3.34</span>
+          <span class="hero-badge">QA_1.3.34</span>
           <span class="hero-badge hero-badge-muted">2026-09-29</span>
         </div>
         <p class="hero-desc">REST API specification for integrating a third-party POS system with a payment terminal over a local network. Covers all transaction types, receipt options, async mode, and signature approval flow.</p>
@@ -1338,7 +1338,7 @@ Content-Length: 1
           <tr><td class="field-name">AmtTip</td><td class="field-type">long</td><td><span class="badge badge-o">O</span></td><td>Tip amount of the sale in cents.</td></tr>
           <tr><td class="field-name">AsyncMode</td><td class="field-type">bool</td><td><span class="badge badge-o">O</span></td><td>Default disabled. Set enabled for async mode — see <a class="doc-table-ref" href="#overview-syncasync">Sync vs Async</a>.</td></tr>
           <tr><td class="field-name">WithReceiptImageData</td><td class="field-type">bool</td><td><span class="badge badge-o">O</span></td><td>Requests supplementary receipt image/signature data. <code>ReceiptData</code> is controlled by <code>ReceiptType</code>; receipt fields are optional and returned only when generated.</td></tr>
-          <tr><td class="field-name">DisablePrinting</td><td class="field-type">bool</td><td><span class="badge badge-o">O</span></td><td>If enabled, disable receipt printing for this transaction.</td></tr>
+          <tr><td class="field-name">DisablePrinting</td><td class="field-type">bool</td><td><span class="badge badge-o">O</span></td><td>If enabled, disable receipt printing for this transaction. Exception: when the transaction requires a paper signature, the merchant signature copy is still printed so the cardholder can sign. All other receipts stay unprinted, and the receipt data returned to the POS is unchanged.</td></tr>
           <tr><td class="field-name">ReceiptType</td><td class="field-type">int</td><td><span class="badge badge-o">O</span></td><td>Defines the receipt format. See <a class="doc-table-ref" href="#ref-req-02">Table REQ-02</a>.</td></tr>
           <tr><td class="field-name">PlainTextCharPerLine</td><td class="field-type">int</td><td><span class="badge badge-o">O</span></td><td>Plain-text receipt width when <code>ReceiptType</code> is plain text.</td></tr>
           <tr><td class="field-name">CustomerReceiptPrintOption</td><td class="field-type">int</td><td><span class="badge badge-o">O</span></td><td>Defines the customer receipt printing option. See <a class="doc-table-ref" href="#ref-req-03">Table REQ-03</a>.</td></tr>
@@ -1351,6 +1351,15 @@ Content-Length: 1
           <li>If <code>AmtTip</code> &gt; 0, the request is sent with the Tip value regardless of <code>EnableTip</code>.</li>
           <li>If <code>AmtTip</code> is 0 and <code>EnableTip</code> is true and the payment app allows tip, a popup prompts the user to enter a Tip value.</li>
           <li>If the payment app is not set up to allow tip, the request proceeds without a Tip value.</li>
+        </ul>
+      </div>
+      <div class="info-card" style="margin-top:16px;" id="transaction-restrictions">
+        <h4>Disabled functions and manual card entry</h4>
+        <ul>
+          <li>If the requested transaction type is disabled for the merchant in TMS, the terminal rejects the request without contacting the host. The response is HTTP 200 with the requested <code>TxnType</code>, <code>Success</code> <code>"0"</code> and <code>ResponseText</code> <code>"This Feature Is Not Available"</code>.</li>
+          <li>If MOTO is disabled for the merchant, a transaction request that asks for manual card entry (for example with <code>Pan</code>) is rejected with the same response.</li>
+          <li>If the MOTO password is enabled for the merchant, pressing Manual Entry on the terminal card screen asks for the MOTO password before the card details are entered. This applies to Purchase, Pre-auth, Pre-auth Complete and Card Verification. Refund does not ask for it, and MOTO Purchase asks for it only once, as before.</li>
+          <li>Back on the MOTO password prompt returns to the card screen. Cancel, closing the prompt, or reaching the maximum number of wrong attempts cancels the transaction with <code>Success</code> <code>"0"</code> and <code>ResponseText</code> <code>"Transaction Cancelled"</code>. An idle timeout on the prompt ends the transaction with <code>Success</code> <code>"0"</code> and <code>ResponseText</code> <code>"Dialog Timed Out"</code>.</li>
         </ul>
       </div>
       <h3 class="subsection-title" id="transaction-request-ref" style="margin-top:24px;">Reference — Request field logic</h3>
@@ -1384,6 +1393,7 @@ Content-Length: 1
         <table class="field-table">
           <thead><tr><th>Print Option</th><th>Description</th></tr></thead>
           <tbody>
+            <tr><td class="field-name">Not set</td><td>Follows the terminal receipt configuration.</td></tr>
             <tr><td class="field-name">0</td><td>No Printing</td></tr>
             <tr><td class="field-name">1</td><td>AutoPrinting</td></tr>
             <tr><td class="field-name">2</td><td>Prompt Printing</td></tr>
@@ -3453,6 +3463,11 @@ Content-Length: 1
       <div class="timeline">
         <div class="timeline-item">
           <div class="timeline-dot latest"></div>
+          <div class="timeline-header"><span class="timeline-version">QA_1.3.34</span><span class="timeline-date">2026/10/27</span><span class="timeline-author">by Huy Nguyen</span></div>
+          <div class="timeline-notes"><span class="cl-badge changed"><span class="cl-badge-type">CHANGED</span>Print the merchant signature copy when a paper signature is required, even if <code>DisablePrinting</code> is enabled.</span><span class="cl-badge changed"><span class="cl-badge-type">CHANGED</span>Ask for the MOTO password before manual card entry on the terminal when the MOTO password is enabled.</span><span class="cl-badge changed"><span class="cl-badge-type">CHANGED</span>Reject a transaction type disabled for the merchant, and manual card entry when MOTO is disabled, with <code>"This Feature Is Not Available"</code>.</span><span class="cl-badge changed"><span class="cl-badge-type">CHANGED</span>An omitted <code>CustomerReceiptPrintOption</code> or <code>MerchantReceiptPrintOption</code> follows the terminal receipt configuration.</span></div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
           <div class="timeline-header"><span class="timeline-version">QA_1.3.30</span><span class="timeline-date">2026/09/29</span><span class="timeline-author">by Huy Nguyen</span></div>
           <div class="timeline-notes"><span class="cl-badge changed"><span class="cl-badge-type">CHANGED</span>Add optional <code>TerminalID</code> to <code>querytransaction</code> responses, including completed and pending signature-status responses.</span></div>
         </div>
