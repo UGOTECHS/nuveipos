@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>On-Premise Integration — Till POS Integration API v1.3.34</title>
+<title>On-Premise Integration — Till POS Integration API v1.3.35</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 <style>
@@ -503,7 +503,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
         <span class="sh-subtitle">Nuvei</span>
       </div>
     </div>
-    <span class="sh-firmware">QA_1.3.34</span>
+    <span class="sh-firmware">QA_1.3.35</span>
   </div>
 
   <div class="nav-group">
@@ -601,9 +601,9 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
           <li>Host Modes: Direct API Device – App 2 App Inter-Link</li>
         </ul>
         <div class="hero-meta">
-          <span class="hero-badge">API v1.3.34</span>
-          <span class="hero-badge">QA_1.3.34</span>
-          <span class="hero-badge hero-badge-muted">2026-09-29</span>
+          <span class="hero-badge">API v1.3.35</span>
+          <span class="hero-badge">QA_1.3.35</span>
+          <span class="hero-badge hero-badge-muted">2026-11-26</span>
         </div>
         <p class="hero-desc">REST API specification for integrating a third-party POS system with a payment terminal over a local network. Covers all transaction types, receipt options, async mode, and signature approval flow.</p>
       </div>
@@ -1248,22 +1248,42 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
     <div class="middle-col">
       <h2 class="section-title">Health Check</h2>
       <div class="section-desc">
-        <p>Verifies that the terminal's payment app server is alive and reachable. The POS can send this request in parallel with active transactions without interference.</p>
+        <p>Verifies that the terminal's payment app server is alive and reachable. The basic check can be sent in parallel with active transactions without interference.</p>
         <p>A successful response returns HTTP <strong>200</strong> with <code>Content-Type: text/plain</code>, <code>Content-Length: 1</code>, and a single-space body. No response (connection refused/timeout) indicates the server is down.</p>
+        <p><strong>Health check with host logon.</strong> To also verify the connection to the payment host, add the <code>Merchant</code> query parameter with the merchant ID. The terminal then performs a host logon for that merchant:</p>
+        <ul>
+          <li>Logon succeeds: HTTP <strong>200</strong> with the same single-space body as the basic check.</li>
+          <li>The check is silent, like the basic check: the terminal shows no logon result screen and waits for no key press. The response is sent as soon as the host logon ends.</li>
+          <li>Logon fails: HTTP <strong>500</strong> with an error response (<code>ErrMessage</code> holds the reason).</li>
+          <li>The merchant ID is not configured on the terminal: HTTP <strong>403</strong> with an error response, and no logon is started.</li>
+          <li>The terminal must be idle. If a transaction is in progress, the request is refused with HTTP <strong>403</strong> (terminal busy), the same as the <a class="doc-table-ref" href="#logon">Logon</a> request.</li>
+          <li>This check runs a real host logon. Do not send it before every transaction; use it sparingly, for example at start of day or when a connectivity problem is suspected.</li>
+        </ul>
+        <p>A request without the <code>Merchant</code> parameter, or with an empty value, is the basic check: no logon, and no change in behaviour. The parameter name is case-sensitive.</p>
       </div>
+      <div class="table-label">Query Parameters</div>
+      <table class="field-table">
+        <thead><tr><th>Parameter</th><th>Type (Max Length)</th><th>M/O</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td class="field-name">Merchant</td><td class="field-type">string(2)</td><td><span class="badge badge-o">O</span></td><td>Merchant ID to log on to the host. When absent or empty, the request is the basic health check.</td></tr>
+        </tbody>
+      </table>
     </div>
     <div class="right-col">
       <div class="url-block">
         <div class="url-block-label">Endpoint</div>
         <div class="endpoint-url"><span class="http-method get">GET</span> https://<span class="url-var">{{pos-server}}</span>:<span class="url-var">{{pos-port}}</span>/v1/sessions/<span class="url-var">{{sessionId}}</span>/healthcheck</div>
+        <div class="endpoint-url"><span class="http-method get">GET</span> https://<span class="url-var">{{pos-server}}</span>:<span class="url-var">{{pos-port}}</span>/v1/sessions/<span class="url-var">{{sessionId}}</span>/healthcheck?Merchant=<span class="url-var">{{merchantId}}</span></div>
       </div>
       <div class="code-block-wrap"><div class="code-block-label">No request body required</div></div>
-      <div class="code-block-wrap code-single"><div class="code-block-label">Response</div>
+      <div class="code-block-wrap code-single"><div class="code-block-label">Response (basic check, or logon check with a successful logon)</div>
         <pre><code class="language-text">HTTP/1.1 200 OK
 Content-Type: text/plain
 Content-Length: 1
 
 (one space — server is alive)</code></pre></div>
+      <div class="code-block-wrap code-single"><div class="code-block-label">Response (logon check, merchant not found)</div>
+        <pre><code class="language-json">{"SessionId":"1","ResponseType":"healthcheck","Response":{"ErrMessage":"Merchant with Id 99 not found","Suggestion":"","StatusCode":"403"}}</code></pre></div>
     </div>
   </div>
 
@@ -3463,6 +3483,11 @@ Content-Length: 1
       <div class="timeline">
         <div class="timeline-item">
           <div class="timeline-dot latest"></div>
+          <div class="timeline-header"><span class="timeline-version">QA_1.3.35</span><span class="timeline-date">2026/11/26</span><span class="timeline-author">by Huy Nguyen</span></div>
+          <div class="timeline-notes"><span class="cl-badge new"><span class="cl-badge-type">NEW</span>Health check with host logon: <code>GET /healthcheck?Merchant=&lt;id&gt;</code> performs a host logon for that merchant. A request without the <code>Merchant</code> parameter stays the basic health check.</span></div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
           <div class="timeline-header"><span class="timeline-version">QA_1.3.34</span><span class="timeline-date">2026/10/27</span><span class="timeline-author">by Huy Nguyen</span></div>
           <div class="timeline-notes"><span class="cl-badge changed"><span class="cl-badge-type">CHANGED</span>Print the merchant signature copy when a paper signature is required, even if <code>DisablePrinting</code> is enabled.</span><span class="cl-badge changed"><span class="cl-badge-type">CHANGED</span>Ask for the MOTO password before manual card entry on the terminal when the MOTO password is enabled.</span><span class="cl-badge changed"><span class="cl-badge-type">CHANGED</span>Reject a transaction type disabled for the merchant, and manual card entry when MOTO is disabled, with <code>"This Feature Is Not Available"</code>.</span><span class="cl-badge changed"><span class="cl-badge-type">CHANGED</span>An omitted <code>CustomerReceiptPrintOption</code> or <code>MerchantReceiptPrintOption</code> follows the terminal receipt configuration.</span></div>
         </div>
